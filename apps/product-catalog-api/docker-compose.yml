@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: product-catalog-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=product_catalog
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - JWT_SECRET=your_jwt_secret
+      - JWT_EXPIRES_IN=24h
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: nodemon src/app.js
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    container_name: product-catalog-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=product_catalog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 

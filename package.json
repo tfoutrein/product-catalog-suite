@@ -1,0 +1,23 @@
+{
+  "name": "product-catalog-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev -w apps/product-catalog-api",
+    "api:start": "npm run start -w apps/product-catalog-api",
+    "api:seed": "npm run seed -w apps/product-catalog-api",
+    "api:wipe": "npm run wipe -w apps/product-catalog-api",
+    "api:reset": "npm run reset -w apps/product-catalog-api",
+    "backoffice:dev": "npm run dev -w apps/product-catalog-backoffice",
+    "backoffice:build": "npm run build -w apps/product-catalog-backoffice",
+    "backoffice:preview": "npm run preview -w apps/product-catalog-backoffice",
+    "dev": "concurrently \"npm run api:dev\" \"npm run backoffice:dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

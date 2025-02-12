@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  product-catalog-api:
+    build: 
+      context: ./apps/product-catalog-api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=product_catalog
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      # Variables pour la génération de description
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
+      - HUGGING_FACE_API_KEY=${HUGGING_FACE_API_KEY}
+      - DEBUG_MODE=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - product-catalog-network
+
+  product-catalog-backoffice:
+    build:
+      context: ./apps/product-catalog-backoffice
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - product-catalog-api
+    networks:
+      - product-catalog-network
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=product_catalog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - product-catalog-network
+
+volumes:
+  postgres_data:
+
+networks:
+  product-catalog-network:
+    driver: bridge 
