@@ -23,7 +23,8 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost',
-    'https://product-catalog-backoffice.vercel.app'
+    'https://product-catalog-backoffice.vercel.app',
+    'https://product-catalog-suite.vercel.app'
   ],
   credentials: true,
   optionsSuccessStatus: 200

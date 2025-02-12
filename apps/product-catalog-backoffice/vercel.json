@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://product-catalog-api.onrender.com/api/$1"
+      "dest": "https://product-catalog-suite.onrender.com/api/$1"
     },
     {
       "src": "/assets/(.*)",
