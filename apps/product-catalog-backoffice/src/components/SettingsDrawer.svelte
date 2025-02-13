@@ -4,11 +4,12 @@
   import ThemeToggle from './ThemeToggle.svelte';
   import DepthSlider from './DepthSlider.svelte';
 
+  export let isCollapsed = false;
   let isOpen = false;
 </script>
 
 <div class="relative">
-  {#if isOpen}
+  {#if isOpen && !isCollapsed}
     <div
       transition:slide={{ duration: 300, axis: 'y' }}
       class="absolute bottom-full left-0 w-full bg-white dark:bg-gray-800 colorful:bg-transparent border-t border-gray-200 dark:border-gray-700 colorful:border-white/10 rounded-t-lg shadow-lg colorful:shadow-none"
@@ -31,7 +32,7 @@
     <!-- Icône -->
     <Settings 
       class="relative w-6 h-6" 
-      style="transform: rotate({isOpen ? '180deg' : '0deg'}); transition: transform 0.3s ease" 
+      style="transform: rotate({isOpen && !isCollapsed ? '180deg' : '0deg'}); transition: transform 0.3s ease" 
     />
   </button>
 </div> 

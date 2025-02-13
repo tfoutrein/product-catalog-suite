@@ -31,7 +31,7 @@
   <div class="flex h-screen bg-gray-100 dark:bg-gray-900 colorful:bg-gradient-to-br colorful:from-pink-100 colorful:to-purple-100">
     <Sidebar />
     
-    <main class="relative flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 colorful:bg-transparent">
+    <main class="relative flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 colorful:bg-transparent transition-all duration-300">
       <div class="container mx-auto px-6 py-8">
         <Route path="/">
           <Dashboard />
