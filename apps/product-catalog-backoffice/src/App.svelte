@@ -6,20 +6,28 @@
   import Products from './routes/Products.svelte';
   import Categories from './routes/Categories.svelte';
   import Inventory from './routes/Inventory.svelte';
+  import Users from './routes/Users.svelte';
+  import Login from './routes/Login.svelte';
+  import ProtectedRoute from './components/ProtectedRoute.svelte';
   import { setContext } from 'svelte';
   import { depth } from './stores/theme';
+  import { auth } from './stores/auth';
   import { onMount } from 'svelte';
 
   export let url = "";
   setContext('url', url);
 
-  // S'assurer que la variable CSS est initialisée au montage
+  let isAuthenticated = false;
+
   onMount(() => {
     const initialDepth = $depth;
     document.documentElement.style.setProperty('--depth-value', (initialDepth / 100).toString());
+
+    return auth.subscribe(state => {
+      isAuthenticated = state.isAuthenticated;
+    });
   });
 
-  // Mettre à jour la variable CSS quand la profondeur change
   $: if (typeof window !== 'undefined') {
     document.documentElement.style.setProperty('--depth-value', ($depth / 100).toString());
   }
@@ -28,26 +36,28 @@
 <Toaster />
 
 <Router {url}>
-  <div class="flex h-screen bg-gray-100 dark:bg-gray-900 colorful:bg-gradient-to-br colorful:from-pink-100 colorful:to-purple-100">
-    <Sidebar />
-    
-    <main class="relative flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 colorful:bg-transparent transition-all duration-300">
-      <div class="container mx-auto px-6 py-8">
-        <Route path="/">
-          <Dashboard />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-        <Route path="/categories">
-          <Categories />
-        </Route>
-        <Route path="/inventory">
-          <Inventory />
-        </Route>
-      </div>
-    </main>
-  </div>
+  {#if isAuthenticated}
+    <div class="flex h-screen bg-gray-100 dark:bg-gray-900 colorful:bg-gradient-to-br colorful:from-pink-100 colorful:to-purple-100">
+      <Sidebar />
+      
+      <main class="relative flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 colorful:bg-transparent transition-all duration-300">
+        <div class="container mx-auto px-6 py-8">
+          <Route path="/" component={Dashboard} />
+          <Route path="/products" component={Products} />
+          <Route path="/categories" component={Categories} />
+          <Route path="/inventory" component={Inventory} />
+          <Route path="/users" component={Users} />
+        </div>
+      </main>
+    </div>
+  {:else}
+    <Route path="/login" component={Login} />
+    <Route path="*">
+      <ProtectedRoute path="*">
+        <div />
+      </ProtectedRoute>
+    </Route>
+  {/if}
 </Router>
 
 <style lang="postcss">

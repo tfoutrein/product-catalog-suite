@@ -11,6 +11,8 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
       },
     },
   },
@@ -19,4 +21,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    'import.meta.env.VITE_GOOGLE_CLIENT_ID': JSON.stringify(process.env.VITE_GOOGLE_CLIENT_ID || '712046646230-dgbc8p3bru82dui7h7auofmcs2b83svg.apps.googleusercontent.com')
+  }
 }) 

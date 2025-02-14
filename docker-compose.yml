@@ -20,6 +20,9 @@ services:
       - GOOGLE_CSE_ID=${GOOGLE_CSE_ID}
       - HUGGING_FACE_API_KEY=${HUGGING_FACE_API_KEY}
       - DEBUG_MODE=true
+      # Variables pour l'authentification Google
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
     depends_on:
       postgres:
         condition: service_healthy

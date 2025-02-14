@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const descriptionController = require('../controllers/DescriptionController');
+const brandController = require('../controllers/BrandController');
 
 /**
  * @swagger
- * /api/descriptions/generate:
+ * /api/brands/detect:
  *   post:
  *     tags:
- *       - Descriptions
- *     summary: Génère une description pour un produit
- *     description: Utilise Google Search et Hugging Face pour générer une description pertinente
+ *       - Marques
+ *     summary: Détecte la marque d'un produit
+ *     description: Analyse le nom du produit pour détecter automatiquement la marque
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -23,24 +23,18 @@ const descriptionController = require('../controllers/DescriptionController');
  *             properties:
  *               name:
  *                 type: string
- *                 description: Nom du produit
- *               brand:
- *                 type: string
- *                 description: Marque du produit (optionnel)
+ *                 description: Nom du produit à analyser
  *     responses:
  *       200:
- *         description: Description générée avec succès
+ *         description: Marque détectée avec succès
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 description:
+ *                 brand:
  *                   type: string
- *                   description: Description générée
- *                 imageUrl:
- *                   type: string
- *                   description: URL de l'image trouvée (optionnel)
+ *                   description: Nom de la marque détectée (null si aucune marque n'est détectée)
  *       400:
  *         description: Paramètres invalides
  *         content:
@@ -54,6 +48,6 @@ const descriptionController = require('../controllers/DescriptionController');
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/generate', descriptionController.generateDescription);
+router.post('/detect', brandController.detectBrand);
 
 module.exports = router; 

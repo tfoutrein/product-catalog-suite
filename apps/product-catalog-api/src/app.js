@@ -13,6 +13,8 @@ const productsRouter = require('./routes/productRoutes');
 const categoriesRouter = require('./routes/categoryRoutes');
 const inventoryRouter = require('./routes/inventoryRoutes');
 const descriptionRouter = require('./routes/descriptionRoutes');
+const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 const descriptionController = require('./controllers/DescriptionController');
 const brandController = require('./controllers/BrandController');
 
@@ -50,6 +52,8 @@ app.get('/api-docs.json', (req, res) => {
 });
 
 // Routes
+app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/inventory', inventoryRouter);

@@ -5,10 +5,12 @@
     Package,
     Tags,
     Store,
+    Users,
     ChevronLeft,
     ChevronRight
   } from 'lucide-svelte';
   import SettingsDrawer from './SettingsDrawer.svelte';
+  import UserAvatar from './UserAvatar.svelte';
   import { slide } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
 
@@ -18,7 +20,8 @@
     { path: "/", label: "Dashboard", icon: Home },
     { path: "/products", label: "Produits", icon: Package },
     { path: "/categories", label: "Catégories", icon: Tags },
-    { path: "/inventory", label: "Inventaire", icon: Store }
+    { path: "/inventory", label: "Inventaire", icon: Store },
+    { path: "/users", label: "Utilisateurs", icon: Users }
   ];
 
   function toggleSidebar() {
@@ -105,6 +108,7 @@
   </div>
   
   <div class="relative mt-auto">
+    <UserAvatar {isCollapsed} />
     <SettingsDrawer {isCollapsed} />
   </div>
 </aside>
