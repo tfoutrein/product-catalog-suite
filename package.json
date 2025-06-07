@@ -15,7 +15,8 @@
     "backoffice:dev": "npm run dev -w apps/product-catalog-backoffice",
     "backoffice:build": "npm run build -w apps/product-catalog-backoffice",
     "backoffice:preview": "npm run preview -w apps/product-catalog-backoffice",
-    "dev": "concurrently \"npm run api:dev\" \"npm run backoffice:dev\""
+    "dev": "concurrently \"npm run api:dev\" \"npm run backoffice:dev\"",
+    "test": "npm test -w apps/product-catalog-api && npm test -w apps/product-catalog-backoffice"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
